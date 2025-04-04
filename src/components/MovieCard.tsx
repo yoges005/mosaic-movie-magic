@@ -17,7 +17,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
           <img 
             src={movie.poster_path} 
             alt={movie.title} 
-            className="movie-poster"
+            className="movie-poster w-full h-64 object-cover"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
               target.src = "https://images.unsplash.com/photo-1518877593221-1f28583780b4";

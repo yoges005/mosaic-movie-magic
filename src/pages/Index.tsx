@@ -25,7 +25,7 @@ const Index = () => {
           <MovieGrid movies={movies} title="Popular Movies" />
           
           <div className="my-16 glass-card p-8">
-            <h2 className="text-3xl font-bold text-white mb-4">Welcome to Mosaic Movie Magic</h2>
+            <h2 className="text-3xl font-bold text-white mb-4">Welcome to Movie Lens</h2>
             <p className="text-gray-200 mb-6">
               Discover the latest blockbusters, timeless classics, and hidden gems all in one place.
               Our curated collection brings you the best of cinema from around the world.
