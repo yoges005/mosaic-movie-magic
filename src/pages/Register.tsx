@@ -34,7 +34,7 @@ const Register = () => {
     
     try {
       await register(name, email, password);
-      navigate("/");
+      navigate("/home");
     } catch (err) {
       setError("Failed to create account");
     } finally {
@@ -50,7 +50,7 @@ const Register = () => {
         <Card className="glass-card w-full max-w-md">
           <CardHeader className="space-y-1 flex flex-col items-center">
             <Film className="h-12 w-12 text-movie-accent mb-2" />
-            <CardTitle className="text-2xl font-bold text-white">Create an account</CardTitle>
+            <CardTitle className="text-2xl font-bold text-white">Welcome to Movie Lens</CardTitle>
             <CardDescription className="text-gray-300">
               Sign up to start your movie journey
             </CardDescription>

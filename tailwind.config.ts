@@ -111,7 +111,7 @@ export default {
 				'fade-in': 'fade-in 0.5s ease-out'
 			},
 			backgroundImage: {
-				'movie-collage': 'linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.7)), url("/movie-collage.jpg")',
+				'movie-collage': 'linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.7)), url("https://m.media-amazon.com/images/I/A1hBTf09UkL._AC_UF1000,1000_QL80_.jpg")',
 				'movie-gradient': 'linear-gradient(to right, rgba(26, 31, 61, 0.95), rgba(26, 31, 61, 0.7))'
 			}
 		}

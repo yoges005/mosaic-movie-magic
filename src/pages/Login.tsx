@@ -26,7 +26,7 @@ const Login = () => {
     
     try {
       await login(email, password);
-      navigate("/");
+      navigate("/home");
     } catch (err) {
       setError("Invalid email or password. For demo, use user@example.com / password");
     } finally {
@@ -42,7 +42,7 @@ const Login = () => {
         <Card className="glass-card w-full max-w-md">
           <CardHeader className="space-y-1 flex flex-col items-center">
             <Film className="h-12 w-12 text-movie-accent mb-2" />
-            <CardTitle className="text-2xl font-bold text-white">Welcome back</CardTitle>
+            <CardTitle className="text-2xl font-bold text-white">Welcome to Movie Lens</CardTitle>
             <CardDescription className="text-gray-300">
               Sign in to your account to continue
             </CardDescription>
