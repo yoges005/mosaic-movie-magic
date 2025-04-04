@@ -15,6 +15,34 @@ import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import Search from "./pages/Search";
 import NotFound from "./pages/NotFound";
+import CompareMoviesPage from "./pages/CompareMoviesPage";
+
+// Set global CSS variables for theme
+import { useEffect } from "react";
+
+const ThemeSetup = () => {
+  useEffect(() => {
+    // Set CSS variables for theme switching
+    document.documentElement.style.setProperty('--dark-background', 'url("https://m.media-amazon.com/images/I/A1hBTf09UkL._AC_UF1000,1000_QL80_.jpg")');
+    document.documentElement.style.setProperty('--light-background', 'linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url("https://m.media-amazon.com/images/I/A1hBTf09UkL._AC_UF1000,1000_QL80_.jpg")');
+    
+    // Apply initial theme
+    const savedTheme = localStorage.getItem("theme") || "dark";
+    const isDark = 
+      savedTheme === "dark" || 
+      (savedTheme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    
+    if (isDark) {
+      document.documentElement.classList.add("dark");
+      document.body.style.setProperty("--page-background", "var(--dark-background)");
+    } else {
+      document.documentElement.classList.remove("dark");
+      document.body.style.setProperty("--page-background", "var(--light-background)");
+    }
+  }, []);
+  
+  return null;
+};
 
 const queryClient = new QueryClient();
 
@@ -22,6 +50,7 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <AuthProvider>
+        <ThemeSetup />
         <Toaster />
         <Sonner />
         <BrowserRouter>
@@ -34,6 +63,7 @@ const App = () => (
             <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/search" element={<Search />} />
+            <Route path="/compare" element={<CompareMoviesPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

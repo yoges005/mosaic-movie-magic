@@ -10,12 +10,15 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Loader2, Save, User, Film, Lock } from "lucide-react";
+import PhotoUpload from "@/components/PhotoUpload";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const Profile = () => {
   const { user, isAuthenticated, loading } = useAuth();
   
   const [name, setName] = useState(user?.name || "");
   const [email, setEmail] = useState(user?.email || "");
+  const [photoURL, setPhotoURL] = useState(user?.photoURL || "");
   const [isUpdating, setIsUpdating] = useState(false);
   
   // Redirect to login if not authenticated
@@ -80,55 +83,64 @@ const Profile = () => {
                       <CardTitle className="text-white">Personal Information</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <form onSubmit={handleProfileUpdate} className="space-y-6">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                          <div className="space-y-2">
-                            <Label htmlFor="name" className="text-white">Full Name</Label>
-                            <Input
-                              id="name"
-                              value={name}
-                              onChange={(e) => setName(e.target.value)}
-                              className="bg-white/10 border-white/20 text-white"
-                            />
-                          </div>
-                          <div className="space-y-2">
-                            <Label htmlFor="email" className="text-white">Email</Label>
-                            <Input
-                              id="email"
-                              type="email"
-                              value={email}
-                              onChange={(e) => setEmail(e.target.value)}
-                              className="bg-white/10 border-white/20 text-white"
-                            />
-                          </div>
-                        </div>
+                      <div className="flex flex-col md:flex-row gap-8 mb-8">
+                        <PhotoUpload 
+                          initialPhotoURL={photoURL} 
+                          onPhotoChange={setPhotoURL} 
+                        />
                         
-                        <div className="space-y-2">
-                          <Label htmlFor="bio" className="text-white">Bio</Label>
-                          <textarea
-                            id="bio"
-                            rows={4}
-                            className="w-full rounded-md bg-white/10 border-white/20 text-white p-2"
-                            placeholder="Tell us about yourself and your movie preferences..."
-                          />
+                        <div className="flex-1">
+                          <form onSubmit={handleProfileUpdate} className="space-y-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                              <div className="space-y-2">
+                                <Label htmlFor="name" className="text-white">Full Name</Label>
+                                <Input
+                                  id="name"
+                                  value={name}
+                                  onChange={(e) => setName(e.target.value)}
+                                  className="bg-white/10 border-white/20 text-white"
+                                />
+                              </div>
+                              <div className="space-y-2">
+                                <Label htmlFor="email" className="text-white">Email</Label>
+                                <Input
+                                  id="email"
+                                  type="email"
+                                  value={email}
+                                  onChange={(e) => setEmail(e.target.value)}
+                                  className="bg-white/10 border-white/20 text-white"
+                                />
+                              </div>
+                            </div>
+                            
+                            <div className="space-y-2">
+                              <Label htmlFor="bio" className="text-white">Bio</Label>
+                              <textarea
+                                id="bio"
+                                rows={4}
+                                className="w-full rounded-md bg-white/10 border-white/20 text-white p-2"
+                                placeholder="Tell us about yourself and your movie preferences..."
+                              />
+                            </div>
+                            
+                            <Button 
+                              type="submit" 
+                              className="bg-movie-secondary hover:bg-movie-secondary/80"
+                              disabled={isUpdating}
+                            >
+                              {isUpdating ? (
+                                <>
+                                  <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Updating
+                                </>
+                              ) : (
+                                <>
+                                  <Save className="mr-2 h-4 w-4" /> Save Changes
+                                </>
+                              )}
+                            </Button>
+                          </form>
                         </div>
-                        
-                        <Button 
-                          type="submit" 
-                          className="bg-movie-secondary hover:bg-movie-secondary/80"
-                          disabled={isUpdating}
-                        >
-                          {isUpdating ? (
-                            <>
-                              <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Updating
-                            </>
-                          ) : (
-                            <>
-                              <Save className="mr-2 h-4 w-4" /> Save Changes
-                            </>
-                          )}
-                        </Button>
-                      </form>
+                      </div>
                     </CardContent>
                   </Card>
                 </TabsContent>
@@ -190,33 +202,39 @@ const Profile = () => {
                     <CardHeader>
                       <CardTitle className="text-white">Viewing Preferences</CardTitle>
                     </CardHeader>
-                    <CardContent>
-                      <div className="space-y-6">
-                        <div>
-                          <h3 className="text-lg font-medium text-white mb-4">Favorite Genres</h3>
-                          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                            {["Action", "Adventure", "Animation", "Comedy", "Crime", "Documentary", "Drama", "Family", "Fantasy", "Horror", "Mystery", "Romance", "Sci-Fi", "Thriller"].map((genre) => (
-                              <div key={genre} className="flex items-center">
-                                <input
-                                  type="checkbox"
-                                  id={`genre-${genre}`}
-                                  className="mr-2 h-4 w-4"
-                                />
-                                <Label htmlFor={`genre-${genre}`} className="text-white">
-                                  {genre}
-                                </Label>
-                              </div>
-                            ))}
-                          </div>
+                    <CardContent className="space-y-6">
+                      <div>
+                        <h3 className="text-lg font-medium text-white mb-4">Theme Settings</h3>
+                        <div className="flex items-center gap-3">
+                          <span className="text-white">Switch theme:</span>
+                          <ThemeToggle />
                         </div>
-                        
-                        <Button 
-                          type="button" 
-                          className="bg-movie-secondary hover:bg-movie-secondary/80"
-                        >
-                          <Save className="mr-2 h-4 w-4" /> Save Preferences
-                        </Button>
                       </div>
+                      
+                      <div>
+                        <h3 className="text-lg font-medium text-white mb-4">Favorite Genres</h3>
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                          {["Action", "Adventure", "Animation", "Comedy", "Crime", "Documentary", "Drama", "Family", "Fantasy", "Horror", "Mystery", "Romance", "Sci-Fi", "Thriller"].map((genre) => (
+                            <div key={genre} className="flex items-center">
+                              <input
+                                type="checkbox"
+                                id={`genre-${genre}`}
+                                className="mr-2 h-4 w-4"
+                              />
+                              <Label htmlFor={`genre-${genre}`} className="text-white">
+                                {genre}
+                              </Label>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      <Button 
+                        type="button" 
+                        className="bg-movie-secondary hover:bg-movie-secondary/80"
+                      >
+                        <Save className="mr-2 h-4 w-4" /> Save Preferences
+                      </Button>
                     </CardContent>
                   </Card>
                 </TabsContent>
